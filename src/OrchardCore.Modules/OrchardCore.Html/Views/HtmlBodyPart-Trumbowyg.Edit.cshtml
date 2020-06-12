@@ -1,11 +1,4 @@
 @model HtmlBodyPartViewModel
-@using OrchardCore.Html.ViewModels;
-@using OrchardCore.Html.Settings;
-@using OrchardCore.ContentLocalization
-@using OrchardCore.ContentManagement.Metadata.Models
-@using OrchardCore.Localization
-@using System.Globalization
-
 @{
     var settings = Model.TypePartDefinition.GetSettings<HtmlBodyPartSettings>();
     var trumbowygSettings = Model.TypePartDefinition.GetSettings<HtmlBodyPartTrumbowygEditorSettings>();
@@ -40,10 +33,16 @@ else
 
 <script at="Foot">
     $(function () {
+@{ 
+    if (culture.GetLanguageDirection() == LanguageDirection.RTL)
+    {
+        <text>
         jQuery.trumbowyg.langs.@culture.TwoLetterISOLanguageName = {
-            _dir: '@culture.GetLanguageDirection()',
+            _dir: '@culture.GetLanguageDirection()'
         };
-
+        </text>
+    }
+}
         var settings = @Html.Raw(trumbowygSettings.Options);
         settings['lang'] = '@culture.TwoLetterISOLanguageName';
 
